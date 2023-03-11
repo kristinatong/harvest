@@ -1,6 +1,5 @@
 from dotenv import load_dotenv, dotenv_values
-import requests
-from requests.models import PreparedRequest
+from requests import PreparedRequest, get, post
 from datetime import datetime, timedelta
 
 load_dotenv()
@@ -17,6 +16,13 @@ GM_PTO_HOLIDAY_TASK_ID = config["GM_PTO_HOLIDAY_TASK_ID"]
 
 BASE_URL = "https://api.harvestapp.com"
 TIME_ENTRIES_URL = f"{BASE_URL}/v2/time_entries"
+
+HEADERS = {
+    "Authorization": f"Bearer {ACCESS_TOKEN}",
+    "Harvest-Account-Id": HARVEST_ACCOUNT_ID,
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
 
 WEEKLY_PROJECT_TASKS = [
     # MONDAY
@@ -57,19 +63,9 @@ WEEKLY_PROJECT_TASKS = [
 ]
 
 
-def get_headers():
-    return {
-        "Authorization": f"Bearer {ACCESS_TOKEN}",
-        "Harvest-Account-Id": HARVEST_ACCOUNT_ID,
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-    }
-
-
 def get_time_entries():
-    headers = get_headers()
     url = TIME_ENTRIES_URL
-    res = requests.get(url=url, headers=headers)
+    res = get(url=url, headers=HEADERS)
 
     if not res.ok:
         print("Error: ", res.text)
@@ -79,10 +75,9 @@ def get_time_entries():
 
 
 def create_time_entry(params):
-    headers = get_headers()
     req = PreparedRequest()
     req.prepare_url(TIME_ENTRIES_URL, params)
-    res = requests.post(url=req.url, headers=headers)
+    res = post(url=req.url, headers=HEADERS)
 
     if not res.ok:
         print("Error: ", res.text)
