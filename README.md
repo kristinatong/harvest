@@ -9,4 +9,6 @@
 1. Use `get_time_entries` to find your project and task IDs
 
 ### Run script
-`python3 harvest.py`
+
+1. `pip install -r requirements.txt`
+2. `python main.py`
