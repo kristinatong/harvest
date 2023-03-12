@@ -2,6 +2,7 @@ from dotenv import load_dotenv, dotenv_values
 from requests import PreparedRequest, get, post
 from datetime import datetime, timedelta
 from weekly_tasks import WEEKLY_TASKS
+import pprint
 
 load_dotenv()
 
@@ -26,7 +27,51 @@ def get_time_entries():
         print("Error: ", res.text)
     else:
         results = res.json()
-        return results
+        return results.get("time_entries", [])
+
+
+def is_time_entry_last_30_days(time_entry):
+    now = datetime.now()
+    spent_date = datetime.strptime(time_entry.get("spent_date"), "%Y-%m-%d")
+    last_month_date = now - timedelta(days=15)
+
+    if spent_date > last_month_date:
+        return True
+    else:
+        return False
+
+
+def get_relevant_project_ids_this_year():
+    all_time_entries = get_time_entries()
+    recent_time_entries = list(filter(is_time_entry_last_30_days, all_time_entries))
+    codes = {}
+
+    for time_entry in recent_time_entries:
+        client = time_entry.get("client")
+        project = time_entry.get("project")
+        task = time_entry.get("task")
+
+        client_name = client.get("name")
+        client_id = client.get("id")
+        project_name = project.get("name")
+        project_id = project.get("id")
+        task_id = task.get("id")
+        task_name = task.get("name")
+
+        if codes.get(client_name) is None:
+            codes[client_name] = {
+                "client_id": client_id,
+                project_name: {"project_id": project_id, "tasks": {task_name: task_id}}
+            }
+        elif codes.get(client_name).get(project_name) is None:
+            codes[client_name][project_name] = {
+                "project_id": project_id,
+                "tasks": {task_name: task_id},
+            }
+        else:
+            codes[client_name][project_name]["tasks"][task_name] = task_id
+
+    pprint.pprint(codes)
 
 
 def create_time_entry(params):
@@ -55,4 +100,5 @@ def create_recurring_tasks():
         date = date + timedelta(days=1)
 
 
-create_recurring_tasks()
+get_relevant_project_ids_this_year()
+# create_recurring_tasks()
