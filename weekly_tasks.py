@@ -15,7 +15,7 @@ WEEKLY_TASKS = [
             "project_id": PROJECT_ID,
             "task_id": PROJECT_TASK_ID,
             "hours": "8",
-            "notes": ["GM Standup", "Artemis Huddle", "Artemis Prod/Eng Collaboration"],
+            "notes": ["GM Standup", "Internal Huddle", "Stripe Weekly Call","Artemis Prod/Eng Collaboration", "Code Freeze Targets", "Sprint Planning"],
         }
     ],
     # TUESDAY
@@ -24,7 +24,7 @@ WEEKLY_TASKS = [
             "project_id": PROJECT_ID,
             "task_id": PROJECT_TASK_ID,
             "hours": "8",
-            "notes": ["Artemis Integration Sync", "Dev Standup"],
+            "notes": ["TP-13732 Sync", "Friendly order ID sync", "Artemis Integration Sync", "Dev Standup", "Sprint Planning"],
         }
     ],
     # WEDNESDAY
@@ -32,9 +32,15 @@ WEEKLY_TASKS = [
         {
             "project_id": PROJECT_ID,
             "task_id": PROJECT_TASK_ID,
-            "hours": "8",
-            "notes": ["Artemis Huddle", "Leadership Check-In"],
-        }
+            "hours": "7",
+            "notes": ["Artemis Huddle", "MAM Sync", "Sprint Review and Demo", "Leadership Check-In", "Sprint Retro", "Redox Weekly Connect"],
+        },
+        {
+            "project_id": GM_PROJECT_ID,
+            "task_id": GM_MISC_NON_BILLABLE_TASK_ID,
+            "hours": "1",
+            "notes": ["Intro to DevOps"],
+        },
     ],
     # THURSDAY
     [
@@ -42,7 +48,7 @@ WEEKLY_TASKS = [
             "project_id": PROJECT_ID,
             "task_id": PROJECT_TASK_ID,
             "hours": "8",
-            "notes": ["Tech Leads Sync", "Dev Standup", "Artemis Integration Sync"],
+            "notes": ["Artemis Regroup","Tech Leads Sync", "Dev Standup", "Artemis Integration Sync"],
         }
     ],
     # FRIDAY
@@ -51,7 +57,7 @@ WEEKLY_TASKS = [
             "project_id": PROJECT_ID,
             "task_id": PROJECT_TASK_ID,
             "hours": "7",
-            "notes": ["GM Standup", "Internal Huddle", "Project Touchbase"],
+            "notes": ["GM Standup", "Internal Huddle", "Project Touchbase", "Mailing Server Infra Sync"],
         },
         {
             "project_id": GM_PROJECT_ID,

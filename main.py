@@ -42,7 +42,8 @@ def create_time_entry(params):
 
 
 def create_recurring_tasks():
-    now = datetime.now()
+    # now = datetime.now()
+    now = datetime.strptime("2023-04-14", '%Y-%M-%d')
     monday = now - timedelta(days=now.weekday())
     date = monday
 
